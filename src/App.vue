@@ -1,78 +1,29 @@
 <template>
-<div id="app">
-    <div class="header">
-      <h1><strong>Occupo</strong></h1>
-      <nav>
-        <button v-on:click="init" v-if="is_auth">Inicio</button>
-        <button v-on:click="getBalance" v-if="is_auth">Habitaciones</button>
-        <button v-if="is_auth">Reservas</button>
-        <button v-if="is_auth">Cerrar Sesión</button>
-      </nav>
-    </div>
+  <div id="app">
+      <div class="header">
+        <h1><strong>Occupo</strong></h1>
+        <nav>
+          <button v-on:click="init" v-if="is_auth">Inicio</button>
+          <button v-on:click="getBalance" v-if="is_auth">Habitaciones</button>
+          <button v-if="is_auth">Reservas</button>
+          <button v-if="is_auth">Cerrar Sesión</button>
+        </nav>
+      </div>
 
-  <div class="body-total">
-    <div class="titulo">
-      <h1><strong>-- CREA TU CUENTA --</strong></h1>
-    </div>
-    <div class="main-component">
-      <p><h2>
-        Crea tu cuenta GRATIS y empieza a disfrutar de<br />
-        experiencias exclusivas a precios increíbles
-      </h2>
-      </p>
-      <form>
-        <p><h3>Nombre(s)
-                <input name="user_name" type="text" class="redondeado" placeholder="Ingresa tu nombre"><br/></h3>
-        </p>
-        <p><h3>Apellido(s):
-            <input type="text" class="redondeado" placeholder="Ingresa tu apellido"><br/></h3>
-        </p>
-        <p><h3>Tipo de documento:
-        <select name="combo" class="redondeado">
-            <option value="1">Cédula de ciudadanía</option>
-            <option value="2">Pasaporte</option>
-            <option value="3">Licencia de conducción</option>
-        </select></h3>
-        </p>
-        <p><h3>Número de documento:
-            <input type="text" class="redondeado"></h3>
-        </p>
-        <p><h3>Fecha de nacimiento:
-            <input type="date" class="redondeado"><br/></h3>
-        </p>
-        <p><h3>Teléfono:
-            <input type="text" class="redondeado2" placeholder="+57"><input type="text" class="redondeado"><br/></h3>
-        </p>
-        <p><h3>Email:
-            <input type="text" class="redondeado" placeholder="ejemplo@ejemplo.com"><br/></h3>
-        </p>
-        <p><h3>Contraseña:
-            <input type="password" class="redondeado" placeholder=""><br/></h3>
-        </p>
-        <p><h3>Confirmar contraseña:
-            <input type="password" class="redondeado" placeholder=""><br/></h3>
-        </p>
-        <p class="center-content">
-            <button type="button" class="btn">Crea tu cuenta</button>
-        </p>
-        <p><h5>Al hacer clic sobre CREAR CUENTA está aceptando nuestra<span style="color: #FBD784"> Política de Privacidad</span></h5></p>
-        </form>
-    </div>
-    <div class="footer">
-      <h2>OCCUPO</h2>
-    </div>
-  </div>
+    <occupo-usuario />
   </div>
 </template>
 
 <script>
-//import OccupaHeader from "./components/OccupoHeader";
+
+import OccupoUsuario from './components/OccupoUsuario.vue';
+
 
 
 export default {
   name: 'App',
 
-  components: { },
+  components: { OccupoUsuario },
 
   data: function(){
     return {
@@ -115,7 +66,7 @@ body {
   align-items: center;
 }
 .main-component {
-  height: 75vh;
+  height: auto;
   margin: 0%;
   padding: 0%;
   background: #0b1d26;
