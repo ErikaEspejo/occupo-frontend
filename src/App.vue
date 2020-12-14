@@ -11,7 +11,9 @@
       </div> -->
     <HeaderHero class="header-hero"/>
     <div class="contenido">
-      <crear-cuenta />
+      <!-- <Principal/> -->
+      <crear-cuenta />      
+      <Reservar/>
     </div>
     <Footer class="footer"/>
   </div>
@@ -23,7 +25,8 @@
 import HeaderHero from './components/HeaderHero'
 import Footer from './components/Footer'
 import CrearCuenta from './components/CrearCuenta.vue';
-
+import Principal from './components/Principal.vue';
+import Reservar from './components/Reservar.vue';
 
 export default {
   name: 'App',
@@ -32,7 +35,9 @@ export default {
     
     HeaderHero,
     Footer,
-    CrearCuenta
+    CrearCuenta,
+    Principal,
+    Reservar
   },
 
   data: function(){
@@ -55,6 +60,7 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Arbutus+Slab&family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 #app {
   font-family: 'Lato', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -62,7 +68,7 @@ export default {
   text-align: center;
   margin: 0;
   display: grid;
-  grid-template-rows: [header]600px[contenido]1fr[footer]50px[fin];
+  grid-template-rows: [header]600px[contenido]1fr[footer]250px[fin];
   background: #0B1D26;
 }
 

@@ -74,7 +74,6 @@ export default {
     width: 100%;
     grid-column: inicio / fin;
     grid-row: header / fin;
-    background-color: red;
   }
 
   #shadow {

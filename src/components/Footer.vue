@@ -39,7 +39,7 @@ export default {
 
 .footer {
   display: grid;
-  grid-template-columns: 300px repeat(2,1fr) 000px;
+  grid-template-columns: 300px repeat(2,1fr) ;
   text-align: left;
   font-size: 14px;
   background-color: #0B1D26;
@@ -64,6 +64,7 @@ export default {
   grid-column: 2/3;
   color: white;
 }
+
 
 
 
