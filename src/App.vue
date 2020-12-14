@@ -1,19 +1,10 @@
 <template>
   <div id="app">
-      <!-- <div class="header">
-        <h1><strong>Occupo</strong></h1>
-        <nav>
-          <button v-on:click="init" v-if="is_auth">Inicio</button>
-          <button v-on:click="getBalance" v-if="is_auth">Habitaciones</button>
-          <button v-if="is_auth">Reservas</button>
-          <button v-if="is_auth">Cerrar Sesión</button>
-        </nav>
-      </div> -->
     <HeaderHero class="header-hero"/>
     <div class="contenido">
       <crear-cuenta />
     </div>
-    <Footer class="footer"/>
+    <Footer class="footer" />
   </div>
 </template>
 
@@ -62,7 +53,7 @@ export default {
   text-align: center;
   margin: 0;
   display: grid;
-  grid-template-rows: [header]600px[contenido]1fr[footer]50px[fin];
+  grid-template-rows: [header]600px[contenido]1fr[footer]250px[fin];
   background: #0B1D26;
 }
 
