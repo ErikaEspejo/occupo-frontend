@@ -1,6 +1,6 @@
 import vueRouter from 'vue-router'
 import App from './App'
-import OccupoUsuario from './components/OccupoUsuario'
+import CrearCuenta from './components/CrearCuenta'
 
 const router = new vueRouter({
     mode:'history',
@@ -14,7 +14,7 @@ const router = new vueRouter({
         {
             path: '/',
             name: "usuario",
-            component: OccupoUsuario
+            component: CrearCuenta
         },
         {
             path: '*',
