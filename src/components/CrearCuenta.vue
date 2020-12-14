@@ -1,6 +1,6 @@
 <template>
   <div id="crear-cuenta">
-    <div class="title">      
+    <div class="title">   
       <h1> - CREA TU CUENTA - </h1>    
       <p>Crea tu cuenta GRATIS y empieza a disfrutar de <br>
         experiencias exclusivas a precios increíbles <br></p>  
@@ -63,7 +63,8 @@
       </fieldset>
       <fieldset>
         <label for="confirmar-contrasena">Confirmar contraseña</label>
-        <input type="password" name="confirmar-contrasena" id="confirmar-contrasena" />
+        <input type="password" name="confirmar-contrasena" id="confirmar-contrasena" v-model="contacto.confirmapass" />
+        <div v-if="submited && !$v.contacto.confirmapass.sameAsPassword"><h6>Las contraseñas no coinciden</h6></div>
       </fieldset>
       <fieldset>
         <input type="checkbox" name="promociones" id="promociones">
@@ -73,16 +74,25 @@
         <input class="button" type="submit" value="CREAR CUENTA">
       </fieldset>
       <p>Al hacer clic sobre CREAR CUENTA está aceptando nuestra
-        <a href="#">Política de Privacidad</a>
+        <a href="" v-on:click.prevent="abrir">Política de Privacidad</a>
       </p>
-    </form>
-
+      </form>
+        <div class="ventana" id="vent">
+          <h4>Política de privacidad y tratamiento de datos</h4>
+          <p>Hotel <strong>Occupo</strong> es responsable del tratamiento de datos personales. </br></br>
+            Hotel <strong>Occupo</strong> informa a todos los usuarios que el tratamiento de los datos registrados como usuario, nombres, apellidos,
+            fecha de nacimiento, documento de identificación, teléfono, correo electrónico y contraseña, serán adminsitrados únicamente para 
+            fines únicos del hotel. Por lo tanto las únicas personas que conocerán los datos de los usuarios serán los empleados, persoal administrativo
+            del hotel y personal que el hotel cnsidere siempre y cuando sea para realizar gestiones relacionadas con el usuario y los servicios 
+            ofrecidos por el hotel.</p>
+          <button class="aceptar" v-on:click.prevent="cerrar">Aceptar</button>
+        </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import { required, minLength, email } from 'vuelidate/lib/validators'
+import { required, minLength, email, sameAs } from 'vuelidate/lib/validators'
 
 
 export default {
@@ -94,6 +104,7 @@ export default {
   data() {
     return {
       submited: false,
+      
 
       contacto: {
         usuario: '',
@@ -104,11 +115,14 @@ export default {
         fechanacim: '',
         telefono: '',
         email: '',
-        password: ''
+        password: '',
+        confirmapass: ''
       }
 
     }
   },
+
+  
 
   methods: {
     enviarDatos() {
@@ -117,8 +131,17 @@ export default {
       if(this.$v.$invalid){
         return false;
       }
-      alert(this.contacto.nombre);
+        alert(this.contacto);
+    },
+
+    abrir: function() {
+      document.getElementById("vent").style.display="block";
+    },
+
+    cerrar: function() {
+      document.getElementById("vent").style.display="none";
     }
+
   },
   validations: {
     contacto: {
@@ -140,6 +163,9 @@ export default {
       password: {
         required, minLength: minLength(6)
       },
+      confirmapass: {
+        sameAsPassword: sameAs('password')
+      },
     }
   }
 }
@@ -151,7 +177,7 @@ export default {
 .crear-cuenta {
   display: grid;
   grid-template-columns: [inicio]1fr[fin];
-  grid-template-rows: [titulo]20px[descrip]50px[form]1fr[fin];
+  grid-template-rows: [titulo]20px[descrip]50px[form]1.5fr[fin];
   justify-items: center;
 }
 
@@ -233,6 +259,44 @@ form a {
 
 .button:hover {
   background: linear-gradient(180deg, #694900 0%, #ffd575 100%);
+}
+
+.ventana {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+  width: 100%;
+  max-width: 400px;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  padding: 25px;
+  display: none;
+}
+  h4 {
+    color: #000000;
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 15px;
+  }
+
+.ventana p {
+    color: #000000;
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 11px;
+  }
+
+.aceptar {
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  background: #000000;
+  width: 100px;
+  height: 35px;
+  font-size: 14px;
+  border-radius: 16px;
+  font-weight: bold;
+  color: white;
 }
 
 </style>
