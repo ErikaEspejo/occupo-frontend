@@ -1,21 +1,12 @@
 <template>
   <div id="app">
-      <!-- <div class="header">
-        <h1><strong>Occupo</strong></h1>
-        <nav>
-          <button v-on:click="init" v-if="is_auth">Inicio</button>
-          <button v-on:click="getBalance" v-if="is_auth">Habitaciones</button>
-          <button v-if="is_auth">Reservas</button>
-          <button v-if="is_auth">Cerrar Sesión</button>
-        </nav>
-      </div> -->
     <HeaderHero class="header-hero"/>
     <div class="contenido">
       <!-- <Principal/> -->
       <crear-cuenta />      
       <Reservar/>
     </div>
-    <Footer class="footer"/>
+    <Footer class="footer" />
   </div>
 </template>
 

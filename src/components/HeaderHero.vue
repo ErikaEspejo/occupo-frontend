@@ -25,7 +25,7 @@
             <a href="#">Mis reservas</a>
           </li>
           <li>
-            <a href="#"><img class="user-icon" width="25px" src="../assets/user.png" alt="">Signup / Login</a>            
+            <a href="" v-on:click.prevent="abrir"><img class="user-icon" width="25px" src="../assets/user.png" alt="">Signup / Login</a>            
           </li>
         </ol>
       </div>          
@@ -48,18 +48,73 @@
       </div>
       <div class="shadow-title"></div>
     </div>
+    <div class="usuarioreg" id="usuarioreg">
+          <h4>Inicio de sesión</h4>
+          <p>
+          <label for="usuario">Usuario</label>
+          <input type="text" name="usuario" id="usuario" v-model="contacto.usuario"/></p>
+          <div v-if="submited && !$v.contacto.usuario.required"><h6>El campo usuario es obligatorio</h6></div>
+          <p>
+          <label for="contrasena">Contraseña</label>
+          <input type="password" name="contrasena" id="contrasena"/></p>
+          <div v-if="submited && !$v.contacto.password.required"><h6>El campo contraseña es obligatorio</h6></div>        
+          <button class="aceptar" type="submit" v-on:click.prevent="cerrar">Iniciar sesión</button>
+        </div>
   </div>
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
+
 export default {
   name: 'HeaderHero',
-  data () {
+  data() {
     return {
+      submited: false,
       
+
+      contacto: {
+        usuario: '',
+        password: '',
+
+      }
+
+    }
+
+    },
+
+
+  methods: {
+    enviarDatos() {
+      this.submited = true;
+      this.$v.$touch();
+      if(this.$v.$invalid){
+        return false;
+      }
+        alert(this.contacto.usuario);
+    },
+
+    abrir: function() {
+      document.getElementById("usuarioreg").style.display="block";
+    },
+
+    cerrar: function() {
+      document.getElementById("usuarioreg").style.display="none";
+    }
+  },
+  validations: {
+    contacto: {
+      usuario: {
+        required
+      },
+      password: {
+        required 
+      },
+
     }
   }
 }
+
 </script>
 
 <style scoped>
@@ -175,4 +230,44 @@ export default {
     grid-column: redes / fin;
     background: linear-gradient(180deg, rgba(11, 29, 38, 0) 0%, #0B1D26 69.2%);
   }
+  h4 {
+    color: #000000;
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 15px;
+  }
+
+  .usuarioreg {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+  width: 100%;
+  max-width: 400px;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  padding: 25px;
+  display: none;
+}
+
+.aceptar {
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  background: #000000;
+  width: 100px;
+  height: 35px;
+  font-size: 14px;
+  border-radius: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+h6 {
+  padding: 0%;
+  margin: 0;
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  color: #eb300f;
+}
+
 </style>
