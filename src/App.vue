@@ -3,8 +3,10 @@
     <HeaderHero class="header-hero"/>
     <div class="contenido">
       <!-- <Principal/> -->
-      <crear-cuenta />      
-      <Reservar/>
+      <!-- <crear-cuenta />   -->    
+      <!-- <Reservar/> -->
+      <Pagos/>
+      <!-- <Habitaciones/> -->
     </div>
     <Footer class="footer" />
   </div>
@@ -18,6 +20,8 @@ import Footer from './components/Footer'
 import CrearCuenta from './components/CrearCuenta.vue';
 import Principal from './components/Principal.vue';
 import Reservar from './components/Reservar.vue';
+import Habitaciones from './components/Habitaciones.vue';
+import Pagos from './components/Pagos.vue';
 
 export default {
   name: 'App',
@@ -28,7 +32,9 @@ export default {
     Footer,
     CrearCuenta,
     Principal,
-    Reservar
+    Reservar,
+    Habitaciones,
+    Pagos
   },
 
   data: function(){
