@@ -45,7 +45,7 @@
           <h1 class="paso">03</h1>
           <h2 class="indicacion">Confirmar reserva</h2>
           <form>
-            <table>
+            <table class="user">
               <tr>
                 <td>
                   <label for="usuario">Ingresa tu usuario</label>
@@ -65,8 +65,8 @@
                   <label for="habitaciones">No. Habitaciones</label>
                 </td>
                 <td>
-                  <select name="habitaciones" id="habitaciones">
-                    <option value="">Lista 1,2,3,4,5</option>
+                  <select v-model="habitacionesSeleccionadas" name="habitaciones" id="habitaciones">
+                    <option v-for="habitacion in habitaciones">{{habitacion}}</option>
                   </select>
                 </td>
               </tr>     
@@ -81,26 +81,26 @@
               <tr>
                 <td>Habitación 1</td>
                 <td>
-                  <select name="adultos-1" id="adultos-1">
-                    <option value="">Lista</option>
+                  <select v-model="habitacionesSeleccionadas" name="adultos-1" id="adultos-1">
+                    <option v-for="habitacion in habitaciones">{{habitacion}}</option>
                   </select>
                 </td>
                 <td>
-                  <select name="niños-1" id="niños-1">
-                    <option value="">Lista</option>
+                  <select v-model="habitacionesSeleccionadas" name="niños-1" id="niños-1">
+                    <option v-for="habitacion in habitaciones">{{habitacion}}</option>
                   </select>
                 </td>
               </tr>
               <tr>
                 <td>Habitación 2</td>
                 <td>
-                  <select name="adultos-2" id="adultos-2">
-                    <option value="">Lista</option>
+                  <select v-model="habitacionesSeleccionadas" name="adultos-2" id="adultos-2">
+                    <option v-for="habitacion in habitaciones">{{habitacion}}</option>
                   </select>
                 </td>
                 <td>
-                  <select name="niños-2" id="niños-2">
-                    <option value="">Lista</option>
+                  <select v-model="habitacionesSeleccionadas" name="niños-2" id="niños-2">
+                    <option v-for="habitacion in habitaciones">{{habitacion}}</option>
                   </select>
                 </td>
               </tr>
@@ -131,13 +131,17 @@ export default {
         'check-in': 'Llegada',
         'check-out': 'Salida',
         /*'month-names': ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],*/
-      }
+      },
+      habitacionesSeleccionadas:[],
+      habitaciones: [1,2,3,4,5],
     }
 
     },
   components: {
     HotelDatePicker,
-  }
+  },
+
+  
 }
 </script>
 
@@ -297,6 +301,11 @@ figure img {
   width: 50%;
   
   height: 30px;
+}
+
+.user td:nth-child(2){
+  text-align: left;
+  padding-left: 50px;
 }
 
 table td:nth-child(1){

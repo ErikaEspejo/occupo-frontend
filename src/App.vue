@@ -4,8 +4,8 @@
     <div class="contenido">
       <!-- <Principal/> -->
       <!-- <crear-cuenta />   -->    
-      <!-- <Reservar/> -->
-      <Pagos/>
+      <Reservar/>
+      <!-- <Pagos/> -->
       <!-- <Habitaciones/> -->
     </div>
     <Footer class="footer" />
