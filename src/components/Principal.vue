@@ -144,12 +144,14 @@ export default {
   font-weight: 200;
   grid-column: 2/4;
   grid-row: 4/5;
+  color:#ffffff;
 }
 
 .item-left p {
   grid-column: 2/4;
   grid-row: 5/6;
   font-size: 16px;
+  color:#ffffff;
 }
 
 .item-left h5 {
@@ -226,12 +228,14 @@ export default {
   font-weight: 200;
   grid-column: 3/5;
   grid-row: 4/5;
+  color:#ffffff;
 }
 
 .item-right p {
   grid-column: 3/5;
   grid-row: 5/6;
   font-size: 16px;
+  color:#ffffff;
 }
 
 .item-right h5 {

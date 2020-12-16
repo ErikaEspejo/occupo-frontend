@@ -121,12 +121,12 @@
         <input class="button" type="submit" value="CREAR CUENTA">
         
         <p class=" politicas">Al hacer clic sobre CREAR CUENTA está aceptando nuestra
-          <a href="" v-on:click.prevent="abrir">Política de Privacidad</a>
+          <a href="" v-on:click.prevent="politica = true">Política de Privacidad</a>
         </p>
       </form>
     </div>
 
-        <div class="ventana" id="vent">
+        <div class="ventana" id="vent" :style="politica ? { display:'block' } : { display:'none' } " >
           <h4>Política de privacidad y tratamiento de datos</h4>
           <p>Hotel <strong>Occupo</strong> es responsable del tratamiento de datos personales. <br> <br>
             Hotel <strong>Occupo</strong> informa a todos los usuarios que el tratamiento de los datos registrados como usuario, nombres, apellidos,
@@ -134,7 +134,7 @@
             fines únicos del hotel. Por lo tanto las únicas personas que conocerán los datos de los usuarios serán los empleados, persoal administrativo
             del hotel y personal que el hotel cnsidere siempre y cuando sea para realizar gestiones relacionadas con el usuario y los servicios 
             ofrecidos por el hotel.</p>
-          <button class="aceptar" v-on:click.prevent="cerrar">Aceptar</button>
+          <button class="aceptar" v-on:click.prevent="politica = !politica">Aceptar</button>
         </div>
   </div>
 </template>
@@ -142,18 +142,22 @@
 <script>
 import axios from 'axios';
 import { required, minLength, email, sameAs } from 'vuelidate/lib/validators'
+import { Global } from '../Global'
+
 
 
 export default {
 
   name: 'CrearCuenta',
 
-  components: { },
-
+  components: {  },
+  
   data() {
     return {
       submited: false,
-      
+      politica: false,
+      posts: [],
+      campos:'',
 
       contacto: {
         usuario: '',
@@ -167,11 +171,19 @@ export default {
         password: '',
         confirmapass: ''
       }
+      
 
     }
   },
+  mounted() {
+    let self = this;
+    axios.get(Global.url)
+    .then( response => {
+      self.posts = response.data;
+      console.log(this.posts)
+    })
+  },
 
-  
 
   methods: {
     enviarDatos() {
@@ -180,16 +192,28 @@ export default {
       if(this.$v.$invalid){
         return false;
       }
-        alert(this.contacto);
+      
     },
-
-    abrir: function() {
-      document.getElementById("vent").style.display="block";
+    datos: function() {
+      this.campos = JSON.stringify(this.contacto);
     },
+    // getUser() {
+    //   axios.get(Global.url + 'usuario/' + this.contacto.usuario)
+    //     .then(response => {
+    //       this.contacto = response
+    //     });
 
-    cerrar: function() {
-      document.getElementById("vent").style.display="none";
-    }
+    // },
+    // addUser: function(){
+    //   let self = this
+    //   axios.post('http://localhost:8081/usuario', self.campos)
+    //   .then( response => {this.campos = response})
+    //   .catch( error => {alert(Error)} )
+    // },
+
+    // created() {
+    //   this.contacto = this.$route.params.usuario
+    // }
 
   },
   validations: {
@@ -230,7 +254,6 @@ export default {
   grid-template-rows: [titulo]20px[descrip]50px[form]1.5fr[fin];
   justify-items: center;
 }
-
 .title h1 {
   width: 100%;  
   justify-content: center;
@@ -240,16 +263,12 @@ export default {
   grid-column: inicio / fin;
   text-align: center;
 }
-
 .title p {
   font-size: 20px;
   color: white;
   grid-column: inicio / fin;
   text-align: center;
-
 }
-
-
 table input, select {
   border-radius: 50px;
   border: none;
@@ -258,20 +277,20 @@ table input, select {
   text-align: center;
   width: 250px;
 }
-
 #promociones {
   width: 50px;
 }
-
 table {
   width: 100%;
 }
-
 .politicas {
   color: white;
   font-size: 14px;
 }
-
+.politicas a{
+  color: #ffd575;
+  font-size: 14px;
+}
 h6 {
   padding: 0%;
   margin: 0;
@@ -279,50 +298,34 @@ h6 {
   font-size: 12px;
   color: #eb300f;
 }
-
 table label {
   margin-right: 20px;
   color: white;
-
 }
-
 #indicativo {
   width: 40px;
 }
-
-
 table p {
   font-size: 14px;
   color: white;
 }
-
 table tr {
   height:30px;
 }
-
 .promociones {
   font-size: 14px;
   text-align: left;
 }
-
 table td:nth-child(2){
   text-align: left;
 }
-
 table td:nth-child(1){
   text-align: right;
 }
-
-
 table form p a {
   color:#ffd575;
   text-decoration:  none; 
 }
-
-table {
-
-}
-
 .button {
   font-family: 'Lato', Helvetica, Arial, sans-serif;
   background: linear-gradient(180deg, #ffd575 0%, #694900 100%);
@@ -332,12 +335,9 @@ table {
   border-radius: 18px;
   font-weight: bold;
 }
-
-
 .button:hover {
   background: linear-gradient(180deg, #694900 0%, #ffd575 100%);
 }
-
 .ventana {
   position: fixed;
   top: 50%;
@@ -357,22 +357,19 @@ table {
     font-weight: 900;
     margin-bottom: 15px;
   }
-
   #telefono {
     width: 200px;
   }
-
-
 .ventana p {
     color: #000000;
     font-size: 12px;
     font-weight: 400;
     margin-bottom: 11px;
   }
-
 .aceptar {
   font-family: 'Lato', Helvetica, Arial, sans-serif;
   background: #000000;
+  align-items: center;
   width: 100px;
   height: 35px;
   font-size: 14px;

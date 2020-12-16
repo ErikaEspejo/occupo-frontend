@@ -2,11 +2,7 @@
   <div id="app">
     <HeaderHero class="header-hero"/>
     <div class="contenido">
-      <!-- <Principal/> -->
-      <!-- <crear-cuenta />   -->    
-      <!-- <Reservar/> -->
-      <Pagos/>
-      <!-- <Habitaciones/> -->
+      <router-view></router-view>
     </div>
     <Footer class="footer" />
   </div>
@@ -14,14 +10,16 @@
 
 <script>
 
+import vueRouter from 'vue-router'
 
 import HeaderHero from './components/HeaderHero'
 import Footer from './components/Footer'
-import CrearCuenta from './components/CrearCuenta.vue';
-import Principal from './components/Principal.vue';
-import Reservar from './components/Reservar.vue';
-import Habitaciones from './components/Habitaciones.vue';
-import Pagos from './components/Pagos.vue';
+import CrearCuenta from './components/CrearCuenta';
+import Principal from './components/Principal';
+import Reservar from './components/Reservar';
+import Habitaciones from './components/Habitaciones';
+import Pagos from './components/Pagos';
+import UserAuth from './components/UserAuth';
 
 export default {
   name: 'App',
@@ -34,7 +32,8 @@ export default {
     Principal,
     Reservar,
     Habitaciones,
-    Pagos
+    Pagos,
+    UserAuth
   },
 
   data: function(){
@@ -44,11 +43,59 @@ export default {
   },
 
   methods: {
+
+    updateAuth: function(){
+      var self = this
+      self.is_auth  = localStorage.getItem('isAuth') || false
+
+      if(self.is_auth == false)
+        self.$router.push({name: "user_auth"})
+
+      else{
+        let username = localStorage.getItem("current_username")
+        self.$router.push({name: "user", params:{ username: username }})
+      }  
+    },
+
+    logIn: function(username){
+      localStorage.setItem('current_username', username)
+      localStorage.setItem('isAuth', true)
+      this.updateAuth()
+    },
+
+    logOut: function(){
+      localStorage.removeItem('isAuth')
+      localStorage.removeItem('current_username')
+      this.updateAuth()
+    },
+
+    init: function(){
+      if(this.$route.name != "user"){
+        let username = localStorage.getItem("current_username")
+        this.$router.push({name: "user", params:{ username: username }})
+      }
+      
+    },
+
+    getReservas: function(){
+      if(this.$route.name != "user_reservas"){
+        let username = localStorage.getItem("current_username")
+        this.$router.push({name: "user_reservas", params:{ username: username }})
+      }
+    },
+
+
+    doTransaction: function(){
+      
+        let username = localStorage.getItem("current_username")
+        this.$router.push({name: "user_pagos", params:{ username: username }})
+    }
+    
   },
 
-  beforeCreate: function(){
-    localStorage.setItem('current_username', 'camilo24')
-    localStorage.setItem('isAuth', true)
+  created: function(){
+    this.$router.push({name: "/principal"})
+    this.updateAuth()
   }
 
 };

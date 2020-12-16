@@ -119,6 +119,8 @@
 
 import HotelDatePicker from 'vue-hotel-datepicker';
 import 'vue-hotel-datepicker/dist/vueHotelDatepicker.css';
+//import { Global } from '../Global'
+import axios from 'axios'
 
 export default {
   name: 'Reservar',
@@ -134,9 +136,16 @@ export default {
       }
     }
 
-    },
+  },
   components: {
     HotelDatePicker,
+      reservas: []
+  },
+  mounted() {
+    
+  },
+  methods: {
+    
   }
 }
 </script>

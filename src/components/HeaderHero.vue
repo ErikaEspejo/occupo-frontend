@@ -3,16 +3,16 @@
     <img id="hero-image" src="../assets/hero.jpg" alt="hero">
     <div id="shadow"></div>
     <div class="header">
-      <a href="#">
+      <router-link to="/principal">
         <img width="100px" class="logo" src="../assets/logo-occupo.png" alt="logo">    
-      </a>
+      </router-link>
       <div class="secciones">
         <ol>
           <li>
-            <a href="#">Habitaciones</a>
+            <router-link to="/habitaciones">Habitaciones</router-link>
           </li>
           <li>
-            <a href="#">Reservas</a>
+            <router-link to="/user/reservas">Reservas</router-link>
           </li>
           <li>
             <a href="#">¿Quiénes somos?</a>
@@ -25,7 +25,9 @@
             <a href="#">Mis reservas</a>
           </li>
           <li>
-            <a href="" v-on:click.prevent="abrir"><img class="user-icon" width="25px" src="../assets/user.png" alt="">Signup / Login</a>            
+            <router-link to="/user/auth">
+              <img class="user-icon" width="25px" src="../assets/user.png" alt="">Sign up/Log in    
+            </router-link>  
           </li>
         </ol>
       </div>          
@@ -48,18 +50,6 @@
       </div>
       <div class="shadow-title"></div>
     </div>
-    <div class="usuarioreg" id="usuarioreg">
-          <h4>Inicio de sesión</h4>
-          <p>
-          <label for="usuario">Usuario</label>
-          <input type="text" name="usuario" id="usuario" v-model="contacto.usuario"/></p>
-          <div v-if="submited && !$v.contacto.usuario.required"><h6>El campo usuario es obligatorio</h6></div>
-          <p>
-          <label for="contrasena">Contraseña</label>
-          <input type="password" name="contrasena" id="contrasena"/></p>
-          <div v-if="submited && !$v.contacto.password.required"><h6>El campo contraseña es obligatorio</h6></div>        
-          <button class="aceptar" type="submit" v-on:click.prevent="cerrar">Iniciar sesión</button>
-        </div>
   </div>
 </template>
 
@@ -71,48 +61,36 @@ export default {
   data() {
     return {
       submited: false,
+      popup: false,
       
-
       contacto: {
-        usuario: '',
-        password: '',
-
+        usuario: "",
+        password: "",
       }
 
     }
 
     },
-
 
   methods: {
-    enviarDatos() {
-      this.submited = true;
-      this.$v.$touch();
-      if(this.$v.$invalid){
-        return false;
-      }
-        alert(this.contacto.usuario);
+        processAuthUser: function(){
+            var self = this
+            axios.post("http://127.0.0.1:8000/user/auth/", self.contacto,  {headers: {}})
+                .then((result) => {
+                    alert("Autenticación Exitosa");
+                    self.$emit('log-in', self.conacto.usuario)
+                })
+                .catch((error) => {
+                    
+                    if (error.response.status == "404")
+                        alert("ERROR 404: Usuario no encontrado.");
+                    
+                    if (error.response.status == "403")
+                        alert("ERROR 403: Contraseña Erronea.");  
+                });
+        }
     },
 
-    abrir: function() {
-      document.getElementById("usuarioreg").style.display="block";
-    },
-
-    cerrar: function() {
-      document.getElementById("usuarioreg").style.display="none";
-    }
-  },
-  validations: {
-    contacto: {
-      usuario: {
-        required
-      },
-      password: {
-        required 
-      },
-
-    }
-  }
 }
 
 </script>

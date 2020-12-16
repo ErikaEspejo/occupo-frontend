@@ -1,5 +1,5 @@
 <template>
-  <div class="pagos">    
+  <div class="pagos">  
     <div class="title">      
       <h1 > <br> <br> <br> FINALIZA TU RESERVA </h1>    
       <hr width ="70px" align="left" color="#FBD784">      
