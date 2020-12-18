@@ -44,7 +44,7 @@
               <label for="tipo-identificacion">Documento de Identificación</label>
             </td>
             <td>
-              <select name="tipo-identificacion" id="tipo-identificacion" v-model="UsuarioInDB.tipoid">
+              <select name="tipo-identificacion" id="tipo-identificacion" v-model="UsuarioInDB.tipo_identificacion">
                 <option value="" disabled selected>Selecciona tu tipo de documento</option>
                 <option value="">Cédula de Ciudadanía</option>
                 <option value="">Cédula de Extranjería</option>
@@ -67,7 +67,7 @@
               <label for="nacimiento">Fecha de Nacimiento</label>
             </td>
             <td>
-              <input type="date" name="nacimiento" id="nacimiento" v-model="UsuarioInDBo.fechanacim" />
+              <input type="date" name="nacimiento" id="nacimiento" v-model="UsuarioInDB.fechanacim" />
             </td>
           </tr>
           <tr>
@@ -76,7 +76,7 @@
             </td>
             <td class="telefono">
               <input type="text" id="indicativo">
-              <input type="text" name="telefono" id="telefono" v-model="UsuarioInDBo.telefono" />
+              <input type="text" name="telefono" id="telefono" v-model="UsuarioInDB.telefono" />
             </td>
           </tr>     
           <tr>
@@ -84,10 +84,10 @@
               <label for="email">Email</label>
             </td>
             <td>
-              <input type="email" name="email" id="email" v-model="UsuarioInDB.email" />
-              <div v-if="submited && !$v.UsuarioInDB.email.required"><h6>El campo email es obligatorio</h6></div>
-              <div v-if="submited && !$v.UsuarioInDB.email.minLength"><h6>El campo email debe contener mínimo 2 caracteres</h6></div>
-              <div v-if="submited && !$v.UsuarioInDB.email.email"><h6>El campo debe tener formato de email</h6></div>
+              <input type="email" name="email" id="email" v-model="UsuarioInDB.correo" />
+              <div v-if="submited && !$v.UsuarioInDB.correo.required"><h6>El campo email es obligatorio</h6></div>
+              <div v-if="submited && !$v.UsuarioInDB.correo.minLength"><h6>El campo email debe contener mínimo 2 caracteres</h6></div>
+              <div v-if="submited && !$v.UsuarioInDB.correo.email"><h6>El campo debe tener formato de email</h6></div>
             </td>
           </tr>
           <tr>
@@ -106,7 +106,7 @@
             </td>
             <td>
               <input type="password" name="confirmar-contrasena" id="confirmar-contrasena" v-model="UsuarioInDB.confirmapass" />
-              <div v-if="submited && !$v.UsuarioInDBo.confirmapass.sameAsPassword"><h6>Las contraseñas no coinciden</h6></div>
+              <div v-if="submited && !$v.UsuarioInDB.confirmapass.sameAsPassword"><h6>Las contraseñas no coinciden</h6></div>
             </td>
           </tr>
           <tr>
@@ -147,7 +147,7 @@ import { Global } from '../Global'
 
 export default {
 
-  name: 'CrearCuenta',
+  name: 'ActualizarUsuario',
 
   components: {  },
   
@@ -162,11 +162,11 @@ export default {
         username: '',
         nombre: '',
         apellido: '',
-        tipoid: '',
+        tipo_identificacion: '',
         identificacion: '',
         fechanacim: '',
         telefono: '',
-        email: '',
+        correo: '',
         password: '',
         confirmapass: ''
       }
@@ -229,7 +229,7 @@ export default {
       identificacion: {
         required, minLength: minLength(2)
       },
-      email: {
+      correo: {
         required, minLength: minLength(2), email
       },
       password: {

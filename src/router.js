@@ -6,6 +6,7 @@ import Reservar from './components/Reservar'
 import Habitaciones from './components/Habitaciones'
 import Pagos from './components/Pagos'
 import UserAuth from './components/UserAuth'
+import ActualizarUsuario from '/componets/ActualizarUsuario'
 
 const router = new vueRouter({
     mode:'history',
@@ -20,6 +21,11 @@ const router = new vueRouter({
             path: '/usuario',
             name: "user",
             component: CrearCuenta
+        },
+        {
+            path: '/usuario/update_usuario',
+            name: "updateuser",
+            component: ActualizarUsuario
         },
         {
             path: '/principal',
