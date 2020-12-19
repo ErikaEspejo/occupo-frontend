@@ -176,7 +176,7 @@ export default {
   },
   mounted() {
     let self = this;
-    axios.get(Global.url)
+    axios.get(Global.url + '/usuarios')
     .then( response => {
       self.posts = response.data;
       console.log(this.posts)

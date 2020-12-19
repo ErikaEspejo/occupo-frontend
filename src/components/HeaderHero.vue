@@ -25,7 +25,7 @@
             <a href="#">Mis reservas</a>
           </li>
           <li>
-            <router-link to="/user/auth">
+            <router-link to="/usurio/auth">
               <img class="user-icon" width="25px" src="../assets/user.png" alt="">Sign up/Log in    
             </router-link>  
           </li>
@@ -73,23 +73,7 @@ export default {
     },
 
   methods: {
-        processAuthUser: function(){
-            var self = this
-            axios.post("http://127.0.0.1:8000/user/auth/", self.contacto,  {headers: {}})
-                .then((result) => {
-                    alert("Autenticación Exitosa");
-                    self.$emit('log-in', self.conacto.usuario)
-                })
-                .catch((error) => {
-                    
-                    if (error.response.status == "404")
-                        alert("ERROR 404: Usuario no encontrado.");
-                    
-                    if (error.response.status == "403")
-                        alert("ERROR 403: Contraseña Erronea.");  
-                });
-        }
-    },
+  },
 
 }
 

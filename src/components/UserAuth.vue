@@ -3,13 +3,13 @@
         <div class="usuarioreg">
             <h1>Inicio de sesión</h1>
             <p>
-            <form v-on:submit.prevent="enviarDatos">
+            <form v-on:submit.prevent="processAuthUser">
             <label for="user">Usuario</label>
-            <input type="text" name="usuario" id="usuario" v-model="contacto.usuario" /><br>
+            <input type="text" name="usuario" id="usuario" v-model="UsuarioInDB.usuario" /><br>
             <p>
             <label for="contrasena">Contraseña</label>
             
-            <input type="password" name="contrasena" id="contrasena"  v-model="contacto.password"/></p><br>
+            <input type="password" name="contrasena" id="contrasena"  v-model="UsuarioInDB.contrasena"/></p><br>
             <button class="button" type="submit" >Iniciar sesión</button>
                 <router-link to="/usuario" >
                     <button class="button" type="submit" >Regístrate</button>
@@ -21,7 +21,7 @@
 
 <script>
 import axios from 'axios'
-import { Global } from '../Global'
+//import { Global } from '../Global'
 
 export default {
 
@@ -32,68 +32,36 @@ export default {
   data() {
     return {
       registro: false,
-      campos:'',
-      posts: [],
 
-      contacto: {
-        usuario: '',
-        password: '',
+      UsuarioInDB: {
+        username: '',
+        contrasena: '',
       }
       
     }
   },
   mounted() {
-    let self = this;
-    axios.get(Global.url)
-    .then( response => {
-      self.posts = response.data;
-    })
+
   },
 
 
   methods: {
-    enviarDatos() {
-      this.submited = true;
-      this.$v.$touch();
-      if(this.$v.$invalid){
-        return false;
-      }else {
-        return true;
-      }
-      
-    },
-    datos: function() {
-      this.campos = JSON.stringify(this.contacto);
-    },
-    getUser() {
-      axios.get(Global.url + 'usuario/' + this.contacto.usuario)
-        .then(response => {
-          this.contacto = response
-        });
-
-    },
-    addUser: function(){
-      let self = this
-      axios.post('http://localhost:8081/usuario', self.campos)
-      .then( response => {this.campos = response})
-      .catch( error => {alert(Error)} )
-    },
     processAuthUser: function(){
-            var self = this
-            axios.post("http://127.0.0.1:8000/user/auth/", self.contacto,  {headers: {}})
-                .then((result) => {
-                    alert("Autenticación Exitosa");
-                    self.$emit('log-in', self.conacto.usuario)
-                })
-                .catch((error) => {
+      var self = this
+      axios.post("https://test-sprint2.herokuapp.com/docs/usuario/auth/", self.UsuarioInDB,  {headers: {}})
+        .then((result) => {
+          alert("Autenticación Exitosa");
+          self.$emit('log-in', self.UsuarioInDB.username)
+        })
+          .catch((error) => {
                     
-                    if (error.response.status == "404")
-                        alert("ERROR 404: Usuario no encontrado.");
+            if (error.response.status == "404")
+              alert("ERROR 404: Usuario no encontrado.");
                     
-                    if (error.response.status == "403")
-                        alert("ERROR 403: Contraseña Erronea.");  
-                });
-        }
+            if (error.response.status == "403")
+              alert("ERROR 403: Contraseña Erronea.");  
+          });
+      },
 
   },
 

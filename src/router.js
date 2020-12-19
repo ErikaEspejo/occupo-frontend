@@ -33,7 +33,7 @@ const router = new vueRouter({
             component: Principal
         },
         {
-            path: '/user/auth',
+            path: '/usario/auth',
             name: "UserAuth",
             component: UserAuth
         },
