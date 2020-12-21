@@ -44,33 +44,26 @@
 
     </div> -->
     <div class="form-habitaciones">
-      <form action="">
+      <form >
         <table>
           <tr>
             <td><label for="codigo">Código de habitación</label></td>
-            <td><input type="text" name="codigo" id="codigo"></td>
+            <td><input type="text" name="codigo" id="codigo" v-model="lista.habitacionid"></td>
           </tr>
           <tr>
             <td><label for="tipo-habitacion">Tipo de habitación</label></td>
-            <td>
-              <select name="tipo-habitacion" id="tipo-habitacion">
-                <option value="" disabled selected>Selecciona el tipo de habitación</option>
-                <option value="">Sencilla</option>
-                <option value="">Doble</option>
-                <option value="">Suite</option>
-              </select>
-            </td>          
+            <td><input name="tipo-habitacio" id="tipo-habitacion" v-model="lista.tipo"></td>         
           </tr>
           <tr>
             <td><label for="descrip-habitacion">Descripción</label></td>
-            <td><textarea name="descrip-habitacion" id="descrip-habitacion" cols="40" rows="5"></textarea></td>
+            <td><textarea name="descrip-habitacion" id="descrip-habitacion" cols="40" rows="5" v-model="lista.descripcion"></textarea></td>
           </tr>
           <tr>
             <td><label for="precio">Precio</label></td>
-            <td><input type="text" name="precio" id="precio"></td>
+            <td><input type="text" name="precio" id="precio" v-model="lista.precio"></td>
           </tr>
         </table>
-        <input class="button" type="submit" value="CREAR HABITACIÓN">       
+        <input class="button" type="submit" value="CREAR HABITACIÓN" v-on:click.prevent="addRoom()">       
       </form>
       <div class="span"></div>
     </div>
@@ -105,9 +98,9 @@ export default {
       lista: [],
       HabitacionesInDB: {
         "habitacionid": 0,
-        "descripcion": "none",
-        "tipo": "none",
-        "precio": 0.0,
+        "descripcion": "",
+        "tipo": "",
+        "precio": 0,
         "disponible": true,
       }
 
@@ -115,19 +108,31 @@ export default {
     }
   },
 
-  created: function(){
-    //this.HabitacionesInDB.habitacionid = this.$route.params.habitacionid
-    let self = this
-
+  mounted: function(){
+    this.lista = this.HabitacionesInDB
     axios.get('http://localhost:8000/habitaciones')
       .then( response => {
         //self.HabitacionesInDB = result.data
-        console.log(response.data)
-        self.HabitacionesInDB = response.data
-        self.lista = self.HabitacionesInDB
-        console.log(self.lista)
+        this.HabitacionesInDB = response.data
       })
+    this.HabitacionesInDB.habitacionid = 0
+    this.HabitacionesInDB.descripcion = ""
+    this.HabitacionesInDB.tipo = ""
+    this.HabitacionesInDB.precio = 0
+    this.HabitacionesInDB.disponible = true
+
   },
+  
+  methods: {
+    addRoom(){
+      axios.post('http://localhost:8000/habitacioness/create_habitaciones', this.lista)
+        .then( data => {
+          alert("La habitación " + this.lista.habitacionid + " ha sido creada");
+        })
+    },
+
+  }
+  
 }
 </script>
 
@@ -179,6 +184,10 @@ textarea {
 .tabla h1,th {
   color: #ffd575;
   text-align: center;
+}
+
+.tabla tr {
+  color: #FFFFFF;
 }
 
 
