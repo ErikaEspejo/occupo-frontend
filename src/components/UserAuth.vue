@@ -1,19 +1,19 @@
 <template>
-    <div id="usuarioreg" >
-        <div class="usuarioreg">
+    <div id="AuthUser" >
+        <div class="container_auth_user">
             <h1>Inicio de sesión</h1>
             <p>
             <form v-on:submit.prevent="processAuthUser">
             <label for="user">Usuario</label>
-            <input type="text" name="usuario" id="usuario" v-model="UsuarioInDB.usuario" /><br>
+            <input type="text" name="usuario" id="usuario" v-model="UsuarioInDB.username" /><br>
             <p>
             <label for="contrasena">Contraseña</label>
             
             <input type="password" name="contrasena" id="contrasena"  v-model="UsuarioInDB.contrasena"/></p><br>
-            <button class="button" type="submit" >Iniciar sesión</button>
-                <router-link to="/usuario" >
-                    <button class="button" type="submit" >Regístrate</button>
-                </router-link>
+            <button class="button" type="submit">Iniciar sesión</button>
+                <!--router-link to="/usuario" >
+                    <button class="button" type="submit">Regístrate</button>
+                </router-link-->
             </form>
         </div>
     </div>
@@ -26,39 +26,37 @@ import axios from 'axios'
 export default {
 
   name: 'UserAuth',
- 
-  components: { },
   
   data() {
     return {
       registro: false,
 
       UsuarioInDB: {
-        username: '',
-        contrasena: '',
+        username: "",
+        contrasena: "",
       }
       
     }
   },
-  mounted() {
-
+  created(){
+    this.processAuthUser()
   },
-
-
   methods: {
+    
     processAuthUser: function(){
+
       var self = this
-      axios.post("https://test-sprint2.herokuapp.com/docs/usuario/auth/", self.UsuarioInDB,  {headers: {}})
+      axios.post("https://test-sprint2.herokuapp.com/usuario/auth", self.UsuarioInDB, {headers: {}})
         .then((result) => {
           alert("Autenticación Exitosa");
           self.$emit('log-in', self.UsuarioInDB.username)
         })
           .catch((error) => {
                     
-            if (error.response.status == "404")
+            if (error.result.status == "404")
               alert("ERROR 404: Usuario no encontrado.");
                     
-            if (error.response.status == "403")
+            if (error.result.status == "403")
               alert("ERROR 403: Contraseña Erronea.");  
           });
       },
@@ -71,7 +69,7 @@ export default {
 
 <style>
 
-.usuarioreg {
+.container_auth_user {
   display: grid;
   grid-template-columns: [inicio]1fr[fin];
   grid-template-rows: [titulo]20px[descrip]50px[form]1.5fr[fin];
@@ -115,7 +113,7 @@ input {
   background: linear-gradient(180deg, #694900 0%, #ffd575 100%);
 }
 
-.usuarioreg {
+.container_auth_user {
     color: #ffffff;
     font-size: 20px;
     font-weight: 900;

@@ -6,7 +6,7 @@ import Reservar from './components/Reservar'
 import Habitaciones from './components/Habitaciones'
 import Pagos from './components/Pagos'
 import UserAuth from './components/UserAuth'
-import ActualizarUsuario from '/componets/ActualizarUsuario'
+import ActualizarUsuario from './components/ActualizarUsuario'
 
 const router = new vueRouter({
     mode:'history',
@@ -24,7 +24,7 @@ const router = new vueRouter({
         },
         {
             path: '/usuario/update_usuario',
-            name: "updateuser",
+            name: "ActualizarUsuario",
             component: ActualizarUsuario
         },
         {
@@ -33,7 +33,7 @@ const router = new vueRouter({
             component: Principal
         },
         {
-            path: '/usario/auth',
+            path: '/usuario/auth',
             name: "UserAuth",
             component: UserAuth
         },

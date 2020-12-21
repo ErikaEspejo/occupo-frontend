@@ -7,7 +7,7 @@
         experiencias exclusivas a precios increíbles <br></p>  
     </div>  
     <div >
-      <form v-on:submit.prevent="enviarDatos">
+      <form v-on:submit.prevent="addUser">
         <table >
           <tr>
             <td>
@@ -67,7 +67,7 @@
               <label for="nacimiento">Fecha de Nacimiento</label>
             </td>
             <td>
-              <input type="date" name="nacimiento" id="nacimiento" v-model="UsuarioInDBo.fechanacim" />
+              <input type="date" name="nacimiento" id="nacimiento" v-model="UsuarioInDB.fecha_nacimiento" />
             </td>
           </tr>
           <tr>
@@ -76,7 +76,7 @@
             </td>
             <td class="telefono">
               <input type="text" id="indicativo">
-              <input type="text" name="telefono" id="telefono" v-model="UsuarioInDBo.telefono" />
+              <input type="text" name="telefono" id="telefono" v-model="UsuarioInDB.telefono" />
             </td>
           </tr>     
           <tr>
@@ -100,15 +100,15 @@
               <div v-if="submited && !$v.UsuarioInDB.password.minLength"><h6>El campo contraseña debe contener mínimo 6 caracteres</h6></div>
             </td>
           </tr>
-          <tr>
+          <!--tr>
             <td>
               <label for="confirmar-contrasena">Confirmar contraseña</label>
             </td>
             <td>
-              <input type="password" name="confirmar-contrasena" id="confirmar-contrasena" v-model="UsuarioInDB.confirmapass" />
-              <div v-if="submited && !$v.UsuarioInDBo.confirmapass.sameAsPassword"><h6>Las contraseñas no coinciden</h6></div>
+              <input type="password" name="confirmar-contrasena" id="confirmar-contrasena" v-model="confirmapass" />
+              <div v-if="submited && !$v.confirmapass.sameAsPassword"><h6>Las contraseñas no coinciden</h6></div>
             </td>
-          </tr>
+          </tr-->
           <tr>
             <td>
               <input type="checkbox" name="promociones" id="promociones">
@@ -156,7 +156,8 @@ export default {
       submited: false,
       politica: false,
       posts: [],
-      campos:'',
+      newUser: {},
+      confirmapass: '',
 
       UsuarioInDB: {
         username: '',
@@ -164,25 +165,16 @@ export default {
         apellido: '',
         tipoid: '',
         identificacion: '',
-        fechanacim: '',
+        fecha_nacimiento: '',
         telefono: '',
         email: '',
         password: '',
-        confirmapass: ''
+        admin: false
       }
       
 
     }
   },
-  mounted() {
-    let self = this;
-    axios.get(Global.url + '/usuarios')
-    .then( response => {
-      self.posts = response.data;
-      console.log(this.posts)
-    })
-  },
-
 
   methods: {
     enviarDatos() {
@@ -192,21 +184,22 @@ export default {
         return false;
       }
       
-    },
-    datos: function() {
-      this.campos = JSON.stringify(this.UsuarioInDB);
+
     },
      getUser() {
-       axios.get(Global.url + 'usuario/' + this.UsuarioInDB.username)
+       axios.get('http://localhost:8000/usuario' + this.UsuarioInDB.username)
          .then(response => {
-           this.UsuarioInDB = response
+           this.UsuarioInDB = response.status
          });
 
     },
     addUser: function(){
+      console.log(this.UsuarioInDB)
       let self = this
-      axios.post('http://localhost:8081/usuario', self.campos)
-      .then( response => {this.campos = response})
+      axios.post('https://test-sprint2.herokuapp.com/docs/usuarios/create_usuario', self.UsuarioInDB)
+      .then( res => {
+        alert("El usuario " + self.UsuarioInDB.username + " ha sido creado");
+        self.$emit('log-in', self.UsuarioInDB.username)})
       .catch( error => {alert(Error)} )
     },
 
@@ -235,9 +228,10 @@ export default {
       password: {
         required, minLength: minLength(6)
       },
-      confirmapass: {
-        sameAsPassword: sameAs('password')
-      },
+       
+    },
+    confirmapass: {
+      sameAsPassword: sameAs('password')
     }
   }
 }

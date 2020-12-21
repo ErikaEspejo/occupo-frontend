@@ -141,7 +141,6 @@
 <script>
 import axios from 'axios';
 import { required, minLength, email, sameAs } from 'vuelidate/lib/validators'
-import { Global } from '../Global'
 
 
 
@@ -175,71 +174,14 @@ export default {
     }
   },
   mounted() {
-    let self = this;
-    axios.get(Global.url)
-    .then( response => {
-      self.posts = response.data;
-      console.log(this.posts)
-    })
+
   },
 
 
   methods: {
-    enviarDatos() {
-      this.submited = true;
-      this.$v.$touch();
-      if(this.$v.$invalid){
-        return false;
-      }
-      
-    },
-    datos: function() {
-      this.campos = JSON.stringify(this.UsuarioInDB);
-    },
-     getUser() {
-       axios.get(Global.url + 'usuario/' + this.UsuarioInDB.username)
-         .then(response => {
-           this.UsuarioInDB = response
-         });
-
-    },
-    addUser: function(){
-      let self = this
-      axios.post('http://localhost:8081/usuario', self.campos)
-      .then( response => {this.campos = response})
-      .catch( error => {alert(Error)} )
-    },
-
-    created() {
-      this.UsuarioInDB = this.$route.params.username
-    }
-
+    
   },
-  validations: {
-    UsuarioInDB: {
-      username: {
-        required, minLength: minLength(4)
-      },
-      nombre: {
-        required, minLength: minLength(2)
-      },
-      apellido: {
-        required, minLength: minLength(2)
-      },
-      identificacion: {
-        required, minLength: minLength(2)
-      },
-      correo: {
-        required, minLength: minLength(2), email
-      },
-      password: {
-        required, minLength: minLength(6)
-      },
-      confirmapass: {
-        sameAsPassword: sameAs('password')
-      },
-    }
-  }
+
 }
 
 </script>

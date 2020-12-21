@@ -1,3 +1,3 @@
 export var Global = {
-    url: 'https://test-sprint2.herokuapp.com/docs',
+    url: 'https://test-sprint2.herokuapp.com',
 }

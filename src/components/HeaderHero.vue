@@ -25,7 +25,7 @@
             <a href="#">Mis reservas</a>
           </li>
           <li>
-            <router-link to="/usurio/auth">
+            <router-link to="/usuario/auth">
               <img class="user-icon" width="25px" src="../assets/user.png" alt="">Sign up/Log in    
             </router-link>  
           </li>
