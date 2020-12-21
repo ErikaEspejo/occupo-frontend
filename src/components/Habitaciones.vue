@@ -6,7 +6,7 @@
       <div class="span"></div>
     </div>
     <div class="filtros">
-      <fieldset>
+      <!-- <fieldset>
         <select name="organizar" id="organizar" >
           <option value="" disabled selected>Organizar por...</option>
           <option value="1">Precios menores a 81.000</option>
@@ -19,7 +19,7 @@
           <option value=""></option>
           <option value=""></option>
         </select>
-      </fieldset>
+      </fieldset> -->
     </div>
 <!--     <div class="habitaciones">
       <article class="habitacion" id="sencilla">
@@ -43,6 +43,37 @@
       </article>
 
     </div> -->
+    <div class="form-habitaciones">
+      <form action="">
+        <table>
+          <tr>
+            <td><label for="codigo">Código de habitación</label></td>
+            <td><input type="text" name="codigo" id="codigo"></td>
+          </tr>
+          <tr>
+            <td><label for="tipo-habitacion">Tipo de habitación</label></td>
+            <td>
+              <select name="tipo-habitacion" id="tipo-habitacion">
+                <option value="" disabled selected>Selecciona el tipo de habitación</option>
+                <option value="">Sencilla</option>
+                <option value="">Doble</option>
+                <option value="">Suite</option>
+              </select>
+            </td>          
+          </tr>
+          <tr>
+            <td><label for="descrip-habitacion">Descripción</label></td>
+            <td><textarea name="descrip-habitacion" id="descrip-habitacion" cols="40" rows="5"></textarea></td>
+          </tr>
+          <tr>
+            <td><label for="precio">Precio</label></td>
+            <td><input type="text" name="precio" id="precio"></td>
+          </tr>
+        </table>
+        <input class="button" type="submit" value="CREAR HABITACIÓN">       
+      </form>
+      <div class="span"></div>
+    </div>
     <div class="tabla">
       <h1>Listado de habitaciones</h1>
       <table>
@@ -106,13 +137,13 @@ export default {
   height: 50px;
 }
 
-.reservar {
+.habitaciones {
   display: grid;
-  grid-template-columns: [inicio]0.3fr[paso]2fr[end-paso]0.3fr[fin];
+  grid-template-columns: [inicio]0.3fr[tabla]2fr[end-tabla]0.3fr[fin];
 }
 
 .title {
-  grid-column: paso / end-paso;
+  grid-column: tabla / end-tabla;
 }
 
 .title h1,h2 {
@@ -125,17 +156,29 @@ export default {
   letter-spacing: 5px;
 }
 
-.title h2 {  
+
+.tabla, .form-habitaciones {
+  grid-column: tabla / end-tabla;
+  width: 100%;
+}
+
+.form-habitaciones td:nth-child(1){
+  width: 400px;
+}
+textarea {
+  border-radius: 10px;
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  font-size: 15px;
+}
+.button{
+  width: 200px;
   color: white;
-  letter-spacing: 0px;
   font-weight: 300;
 }
 
-table tr {
-  color: #FFFFFF;
-}
-table th {
+.tabla h1,th {
   color: #ffd575;
+  text-align: center;
 }
 
 
