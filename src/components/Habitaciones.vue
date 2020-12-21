@@ -44,6 +44,7 @@
 
     </div> -->
     <div class="form-habitaciones">
+
       <form >
         <table>
           <tr>
@@ -69,6 +70,8 @@
     </div>
     <div class="tabla">
       <h1>Listado de habitaciones</h1>
+      <hr width ="70px" align="center" color="#FBD784">  
+      <div class="span"></div>
       <table>
         <tr>
           <th>Código habitación</th>
@@ -179,16 +182,38 @@ textarea {
   width: 200px;
   color: white;
   font-weight: 300;
+  margin-top: 20px;
 }
 
 .tabla h1,th {
   color: #ffd575;
+}
+
+.tabla {  
+  color: white;
+}
+
+.tabla td,th {
+  height: 50px;
+}
+
+.tabla td:nth-child(1) {
+  width: 120px;
+  text-align: center;
+}
+.tabla td:nth-child(2) {
+  width: 100px;
+  text-align: center;
+}
+.tabla td:nth-child(3) {
+  width: 700px;
+  text-align: center;
+}
+.tabla td:nth-child(4) {
+  width: 50px;
   text-align: center;
 }
 
-.tabla tr {
-  color: #FFFFFF;
-}
 
 
 </style>
