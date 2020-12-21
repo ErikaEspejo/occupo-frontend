@@ -25,9 +25,9 @@
             <a href="#">Mis reservas</a>
           </li>
           <li>
-            <router-link to="/usuario/auth">
-              <img class="user-icon" width="25px" src="../assets/user.png" alt="">Sign up/Log in    
-            </router-link>  
+              <router-link to="/usuario/auth">
+                <img class="user-icon" width="25px" src="../assets/user.png" alt="">Sign up/Log in    
+              </router-link>
           </li>
         </ol>
       </div>          
@@ -59,16 +59,10 @@ import { required } from 'vuelidate/lib/validators'
 export default {
   name: 'HeaderHero',
   data() {
-    return {
-      submited: false,
-      popup: false,
-      
-      contacto: {
-        usuario: "",
-        password: "",
-      }
+    return{ 
+        is_auth: localStorage.getItem('isAuth') || false 
 
-    }
+      }  
 
     },
 

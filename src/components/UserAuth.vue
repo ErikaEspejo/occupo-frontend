@@ -3,17 +3,17 @@
         <div class="container_auth_user">
             <h1>Inicio de sesión</h1>
             <p>
-            <form v-on:submit.prevent="processAuthUser">
+            <form>
             <label for="user">Usuario</label>
             <input type="text" name="usuario" id="usuario" v-model="UsuarioInDB.username" /><br>
             <p>
             <label for="contrasena">Contraseña</label>
             
             <input type="password" name="contrasena" id="contrasena"  v-model="UsuarioInDB.contrasena"/></p><br>
-            <button class="button" type="submit">Iniciar sesión</button>
-                <!--router-link to="/usuario" >
+            <button class="button" type="submit" v-on:click.prevent="processAuthUser()">Iniciar sesión</button>
+                <router-link to="/usuario" >
                     <button class="button" type="submit">Regístrate</button>
-                </router-link-->
+                </router-link>
             </form>
         </div>
     </div>
@@ -39,27 +39,28 @@ export default {
     }
   },
   created(){
-    this.processAuthUser()
   },
   methods: {
     
-    processAuthUser: function(){
-
+    processAuthUser(){
       var self = this
-      axios.post("https://test-sprint2.herokuapp.com/usuario/auth", self.UsuarioInDB, {headers: {}})
+      axios.post("http://localhost:8000/usuario/auth", self.UsuarioInDB, {headers: {}})
         .then((result) => {
-          alert("Autenticación Exitosa");
-          self.$emit('log-in', self.UsuarioInDB.username)
+          if (result.status == "200") {
+            alert("Autenticación Exitosa")
+            localStorage.setItem('current_username', self.UsuarioInDB.username)
+            localStorage.setItem('isAuth', true)
+          }
         })
           .catch((error) => {
-                    
-            if (error.result.status == "404")
+                      
+            if (error.response.status == "404")
               alert("ERROR 404: Usuario no encontrado.");
-                    
-            if (error.result.status == "403")
+                      
+            if (error.response.status == "403")
               alert("ERROR 403: Contraseña Erronea.");  
           });
-      },
+    },
 
   },
 

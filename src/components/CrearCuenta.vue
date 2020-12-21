@@ -7,7 +7,7 @@
         experiencias exclusivas a precios increíbles <br></p>  
     </div>  
     <div >
-      <form v-on:submit.prevent="addUser">
+      <form v-on:submit.prevent="addUser()">
         <table >
           <tr>
             <td>
@@ -44,7 +44,7 @@
               <label for="tipo-identificacion">Documento de Identificación</label>
             </td>
             <td>
-              <select name="tipo-identificacion" id="tipo-identificacion" v-model="UsuarioInDB.tipoid">
+              <select name="tipo-identificacion" id="tipo-identificacion" v-model="UsuarioInDB.tipo_identificacion">
                 <option value="" disabled selected>Selecciona tu tipo de documento</option>
                 <option value="">Cédula de Ciudadanía</option>
                 <option value="">Cédula de Extranjería</option>
@@ -84,7 +84,7 @@
               <label for="email">Email</label>
             </td>
             <td>
-              <input type="email" name="email" id="email" v-model="UsuarioInDB.email" />
+              <input type="email" name="email" id="email" v-model="UsuarioInDB.correo" />
               <div v-if="submited && !$v.UsuarioInDB.email.required"><h6>El campo email es obligatorio</h6></div>
               <div v-if="submited && !$v.UsuarioInDB.email.minLength"><h6>El campo email debe contener mínimo 2 caracteres</h6></div>
               <div v-if="submited && !$v.UsuarioInDB.email.email"><h6>El campo debe tener formato de email</h6></div>
@@ -95,12 +95,12 @@
               <label for="contrasena">Contraseña</label>
             </td>
             <td>
-              <input type="password" name="contrasena" id="contrasena" v-model="UsuarioInDB.password" />
-              <div v-if="submited && !$v.UsuarioInDB.password.required"><h6>El campo contraseña es obligatorio</h6></div>
-              <div v-if="submited && !$v.UsuarioInDB.password.minLength"><h6>El campo contraseña debe contener mínimo 6 caracteres</h6></div>
+              <input type="password" name="contrasena" id="contrasena" v-model="UsuarioInDB.contrasena" />
+              <div v-if="submited && !$v.UsuarioInDB.contrasena.required"><h6>El campo contraseña es obligatorio</h6></div>
+              <div v-if="submited && !$v.UsuarioInDB.contrasena.minLength"><h6>El campo contraseña debe contener mínimo 6 caracteres</h6></div>
             </td>
           </tr>
-          <!--tr>
+          <!-- <tr>
             <td>
               <label for="confirmar-contrasena">Confirmar contraseña</label>
             </td>
@@ -108,7 +108,7 @@
               <input type="password" name="confirmar-contrasena" id="confirmar-contrasena" v-model="confirmapass" />
               <div v-if="submited && !$v.confirmapass.sameAsPassword"><h6>Las contraseñas no coinciden</h6></div>
             </td>
-          </tr-->
+          </tr> -->
           <tr>
             <td>
               <input type="checkbox" name="promociones" id="promociones">
@@ -119,7 +119,6 @@
           </tr>    
         </table>
         <input class="button" type="submit" value="CREAR CUENTA">
-        
         <p class=" politicas">Al hacer clic sobre CREAR CUENTA está aceptando nuestra
           <a href="" v-on:click.prevent="politica = true">Política de Privacidad</a>
         </p>
@@ -156,20 +155,18 @@ export default {
       submited: false,
       politica: false,
       posts: [],
-      newUser: {},
       confirmapass: '',
 
       UsuarioInDB: {
-        username: '',
-        nombre: '',
-        apellido: '',
-        tipoid: '',
-        identificacion: '',
-        fecha_nacimiento: '',
-        telefono: '',
-        email: '',
-        password: '',
-        admin: false
+        "username": "",
+        "nombre": "",
+        "apellido": "",
+        "tipo_identificacion": "",
+        "identificacion": "",
+        "fecha_nacimiento": "",
+        "telefono": "",
+        "correo": "",
+        "contrasena": "",
       }
       
 
@@ -183,26 +180,17 @@ export default {
       if(this.$v.$invalid){
         return false;
       }
-      
-
+        
     },
-     getUser() {
-       axios.get('http://localhost:8000/usuario' + this.UsuarioInDB.username)
-         .then(response => {
-           this.UsuarioInDB = response.status
-         });
-
+    addUser(){
+      this.posts = JSON.stringify(this.UsuarioInDB)
+      axios.post('http://localhost:8000/usuarios/create_usuario', this.posts)
+        .then( data => {
+          alert("El usuario " + this.UsuarioInDB.username + " ha sido creado");
+          console.log(data)
+        })
     },
-    addUser: function(){
-      console.log(this.UsuarioInDB)
-      let self = this
-      axios.post('https://test-sprint2.herokuapp.com/docs/usuarios/create_usuario', self.UsuarioInDB)
-      .then( res => {
-        alert("El usuario " + self.UsuarioInDB.username + " ha sido creado");
-        self.$emit('log-in', self.UsuarioInDB.username)})
-      .catch( error => {alert(Error)} )
-    },
-
+    
     created() {
       this.UsuarioInDB = this.$route.params.username
     }
@@ -210,29 +198,29 @@ export default {
   },
   validations: {
     UsuarioInDB: {
-      username: {
+      "username": {
         required, minLength: minLength(4)
       },
-      nombre: {
+      "nombre": {
         required, minLength: minLength(2)
       },
-      apellido: {
+      "apellido": {
         required, minLength: minLength(2)
       },
-      identificacion: {
+      "identificacion": {
         required, minLength: minLength(2)
       },
-      email: {
+      "correo": {
         required, minLength: minLength(2), email
       },
-      password: {
+      "contrasena": {
         required, minLength: minLength(6)
       },
        
     },
-    confirmapass: {
-      sameAsPassword: sameAs('password')
-    }
+/*     confirmapass: {
+      sameAsPassword: sameAs(UsuarioInDB.contrasena)
+    } */
   }
 }
 
