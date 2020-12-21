@@ -50,6 +50,8 @@ export default {
             alert("Autenticación Exitosa")
             localStorage.setItem('current_username', self.UsuarioInDB.username)
             localStorage.setItem('isAuth', true)
+            this.UsuarioInDB.username = ""
+            this.UsuarioInDB.contrasena = ""
           }
         })
           .catch((error) => {
