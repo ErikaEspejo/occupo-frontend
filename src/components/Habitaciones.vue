@@ -113,7 +113,7 @@ export default {
 
   mounted: function(){
     this.lista = this.HabitacionesInDB
-    axios.get('http://localhost:8000/habitaciones')
+    axios.get('https://test-sprint2.herokuapp.com/habitaciones')
       .then( response => {
         //self.HabitacionesInDB = result.data
         this.HabitacionesInDB = response.data
@@ -128,7 +128,7 @@ export default {
   
   methods: {
     addRoom(){
-      axios.post('http://localhost:8000/habitacioness/create_habitaciones', this.lista)
+      axios.post('https://test-sprint2.herokuapp.com/habitacioness/create_habitaciones', this.lista)
         .then( data => {
           alert("La habitación " + this.lista.habitacionid + " ha sido creada");
         })

@@ -11,6 +11,14 @@
         <table >
           <tr>
             <td>
+              <label for="usuarioid">ID Usuario</label>
+            </td>
+            <td>
+              <input type="text" name="usuarioid" id="usuarioid" v-model="UsuarioInDB.usuarioid" autocomplete="=off"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
               <label for="usuario">Usuario</label>
             </td>
             <td>
@@ -167,6 +175,8 @@ export default {
         "telefono": "",
         "correo": "",
         "contrasena": "",
+        "admin":false,
+        "usuarioid": 0,
       }
       
 
@@ -184,7 +194,7 @@ export default {
     },
     addUser(){
       this.posts = JSON.stringify(this.UsuarioInDB)
-      axios.post('http://localhost:8000/usuarios/create_usuario', this.posts)
+      axios.post('https://test-sprint2.herokuapp.com/usuarios/create_usuario', this.posts)
         .then( data => {
           alert("El usuario " + this.UsuarioInDB.username + " ha sido creado");
           console.log(data)

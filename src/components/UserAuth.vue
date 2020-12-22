@@ -44,7 +44,7 @@ export default {
     
     processAuthUser(){
       var self = this
-      axios.post("http://localhost:8000/usuario/auth", self.UsuarioInDB, {headers: {}})
+      axios.post("https://test-sprint2.herokuapp.com/usuario/auth", self.UsuarioInDB, {headers: {}})
         .then((result) => {
           if (result.status == "200") {
             alert("Autenticación Exitosa")
